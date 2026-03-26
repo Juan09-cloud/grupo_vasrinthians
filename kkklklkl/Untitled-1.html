@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mundo Mágico (MM)</title>
+
+<link rel="manifest" href="manifest.json">
+
+<style>
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  background: linear-gradient(180deg,darkblue);
+  color: #333;
+  transition: 0.3s;
+}
+
+header {
+  background: linear-gradient(45deg, darkblue);
+  padding: 20px;
+  text-align: center;
+  color: rgb(255, 255, 255);
+  font-size: 2em;
+  font-weight: bold;
+  letter-spacing: 1px;
+}
+
+nav {
+  background: #ffe4e1;
+  padding: 10px;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+nav button {
+  padding: 10px 18px;
+  border: none;
+  background: darkblue;
+  color: white;
+  cursor: pointer;
+  border-radius: 8px;
+  font-weight: bold;
+  transition: .2s;
+}
+
+nav button:hover {
+  background: darkblue;
+  transform: scale(1.05);
+}
+
+section {
+  display: none;
+  padding: 20px;
+  text-align: center;
+  animation: fade .4s ease;
+}
+
+section.active { display: block; }
+
+@keyframes fade {
+  from {opacity:0; transform: translateY(8px);}
+  to {opacity:1; transform: translateY(0);}
+}
+
+canvas {
+  border: 2px dashed #ff69b4;
+  background: white;
+  border-radius: 12px;
+  touch-action: none;
+}
+
+button {
+  margin-top: 8px;
+}
+
+/* dark mode */
+body.dark {
+  background:#222;
+  color:#eee;
+}
+
+body.dark nav { background:#333; }
+body.dark header { background:#444; }
+body.dark nav button { background:#666; }
+
+.card {
+  background:white;
+  padding:15px;
+  border-radius:12px;
+  box-shadow:0 4px 10px rgba(0,0,0,.1);
+  display:inline-block;
+}
+
+</style>
+</head>
+<body>
+
+<header>Mundo Mágico ✨</header>
+
+<nav>
+  <button data-section="paciencia">Paciência</button>
+  <button data-section="oficina">Oficina</button>
+  <button data-section="jogo">Jogo</button>
+  <button data-section="quiz">Quiz</button>
+  <button data-section="acessibilidade">Acessibilidade</button>
+  <button data-section="player">Sportfly 🎧</button>
+</nav>
+
+<section id="paciencia" class="active">
+  <div class="card">
+    <h2>Cantinho da Paciência</h2>
+    <p id="msg">Respire fundo e observe...</p>
+    <button onclick="meditar()">Meditar 5s</button>
+  </div>
+</section>
+
+<section id="oficina">
+  <div class="card">
+    <h2>Oficina Criativa 🎨</h2>
+    <label>Escolha a cor:</label><br>
+    <input type="color" id="cor" value="#ff69b4"><br><br>
+    <canvas id="desenho" width="500" height="300"></canvas><br>
+    <button onclick="limparCanvas()">Limpar</button>
+  </div>
+</section>
+
+<section id="jogo">
+  <div class="card">
+    <h2>Pegue a Estrela ⭐</h2>
+    <p>Pontos: <span id="pontos">0</span></p>
+    <button onclick="ganharPonto()">✨ pegar estrela</button>
+  </div>
+</section>
+
+<section id="quiz">
+  <div class="card">
+    <h2>Quiz Mágico 🧠</h2>
+    <p>Quanto é 2 + 3?</p>
+    <button onclick="resposta(4)">4</button>
+    <button onclick="resposta(5)">5</button>
+    <button onclick="resposta(6)">6</button>
+    <p id="quizMsg"></p>
+  </div>
+</section>
+
+<section id="acessibilidade">
+  <div class="card">
+    <h2>Acessibilidade</h2>
+    <button onclick="toggleDark()">Modo Noturno</button>
+  </div>
+</section>
+
+<section id="player">
+  <div class="card">
+    <h2>Sportfly 🎧</h2>
+    <p>Música para foco e relaxamento</p>
+    <a href="https://youtu.be/ELY08moRqsw?si=NMIJIjSMVOu062eu">Ruido branco</a>
+    <br><br>
+    
+  </div>
+</section>
+
+<script>
+// navegação
+document.querySelectorAll("nav button").forEach(btn=>{
+  btn.addEventListener("click",()=>abrirSecao(btn.dataset.section));
+});
+
+function abrirSecao(id){
+  document.querySelectorAll("section").forEach(s=>s.classList.remove("active"));
+  document.getElementById(id).classList.add("active");
+}
+
+// meditação
+function meditar(){
+  const msg=document.getElementById("msg");
+  msg.innerText="Respire... 3... 2... 1...";
+  setTimeout(()=>msg.innerText="Respire fundo e observe...",5000);
+}
+
+// canvas
+const canvas=document.getElementById("desenho");
+const ctx=canvas.getContext("2d");
+let desenhando=false;
+let corAtual=document.getElementById("cor").value;
+
+document.getElementById("cor").oninput=e=>corAtual=e.target.value;
+
+function desenhar(x,y){
+  ctx.fillStyle=corAtual;
+  ctx.beginPath();
+  ctx.arc(x,y,5,0,Math.PI*2);
+  ctx.fill();
+}
+
+canvas.addEventListener("mousedown",()=>desenhando=true);
+canvas.addEventListener("mouseup",()=>desenhando=false);
+canvas.addEventListener("mousemove",e=>{
+ if(!desenhando) return;
+ const rect=canvas.getBoundingClientRect();
+ desenhar(e.clientX-rect.left,e.clientY-rect.top);
+});
+
+canvas.addEventListener("touchstart",()=>desenhando=true);
+canvas.addEventListener("touchend",()=>desenhando=false);
+canvas.addEventListener("touchmove",e=>{
+ if(!desenhando) return;
+ e.preventDefault();
+ const rect=canvas.getBoundingClientRect();
+ const touch=e.touches[0];
+ desenhar(touch.clientX-rect.left,touch.clientY-rect.top);
+});
+
+function limparCanvas(){
+ ctx.clearRect(0,0,canvas.width,canvas.height);
+}
+
+// jogo
+let pontos=0;
+function ganharPonto(){
+ pontos++;
+ document.getElementById("pontos").innerText=pontos;
+}
+
+// quiz
+function resposta(valor){
+ const msg=document.getElementById("quizMsg");
+ if(valor===5){
+   msg.innerText="✨ Acertou!";
+ } else {
+   msg.innerText="Tente novamente!";
+ }
+}
+
+// dark mode
+function toggleDark(){
+ document.body.classList.toggle("dark");
+ localStorage.setItem("darkMode",document.body.classList.contains("dark"));
+}
+
+if(localStorage.getItem("darkMode")==="true"){
+ document.body.classList.add("dark");
+}
+
+// player
+function trocarMusica(src){
+ const audio=document.getElementById("audio");
+ audio.src=src;
+ audio.play().catch(()=>{});
+}
+
+// registrar service worker
+if('serviceWorker' in navigator){
+ navigator.serviceWorker.register('sw.js');
+}
+</script>
+
+</body>
+</html>
