@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<title>Minha biblioteca</title>
+
+<!-- Fonte bonita -->
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&family=Playfair+Display:wght@600&display=swap" rel="stylesheet">
+
+<style>
+body {
+    margin: 0;
+    padding: 30px;
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+    color: white;
+}
+
+h1 {
+    text-align: center;
+    font-family: 'Playfair Display', serif;
+    font-size: 42px;
+    margin-bottom: 40px;
+}
+
+/* Grid */
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 25px;
+}
+
+/* Card */
+.card {
+    background: rgba(255,255,255,0.05);
+    backdrop-filter: blur(10px);
+    border-radius: 15px;
+    padding: 15px;
+    text-align: center;
+    transition: 0.3s;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.4);
+}
+
+.card:hover {
+    transform: translateY(-10px) scale(1.03);
+    box-shadow: 0 15px 40px rgba(0,0,0,0.6);
+}
+
+.card img {
+    width: 100%;
+    height: 260px;
+    object-fit: cover;
+    border-radius: 12px;
+}
+
+.card h3 {
+    margin-top: 15px;
+    font-size: 20px;
+}
+
+.card p {
+    font-size: 14px;
+    color: #ddd;
+}
+</style>
+
+</head>
+
+<body>
+
+<h1>Os existencialistas do século</h1>
+
+<div class="grid-container">
+
+    <div class="card">
+        <img src="https://substackcdn.com/image/fetch/f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F34c4b0b9-5835-41ca-98a5-9e6948400018_900x903.jpeg">
+        <h3>Franz Kafka</h3>
+        <p>Quando certa manhã Gregor Samsa acordou de sonhos intranquilos...</p>
+    </div>
+
+    <div class="card">
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSC07PJiFZBsOEjXC91pLuSZk5A1Wmjja-y4Q&s">
+        <h3>Dostoievski</h3>
+        <p>A medida que o nosso amor progride...</p>
+    </div>
+
+    <div class="card">
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSzgQ79Bk5_AVD97ejNH_iTfl4PbDx-3rbYZg&s">
+        <h3>Clarice Lispector</h3>
+        <p>Renda-se, como eu me rendi...</p>
+    </div>
+
+    <div class="card">
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSaMYrmg1FWpd_dg6F6alk_jKIK0liblXVEPg&s">
+        <h3>Albert Camus</h3>
+        <p>Nada no mundo vale que nos afastemos daquilo que amamos.</p>
+    </div>
+
+    <div class="card">
+        <img src="https://braziljournal.com/wp-content/uploads/2024/03/tim-maia-memoria.jpg">
+        <h3>Tim Maia</h3>
+        <p>A semana inteira fiquei esperando pra te ver sorrindo...</p>
+    </div>
+
+    <div class="card">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/1/1b/Nietzsche187a.jpg">
+        <h3>Friedrich Nietzsche</h3>
+        <p>Aquilo que se faz por amor está sempre além do bem e do mal</p>
+    </div>
+
+</div>
+
+</body>
+</html>
